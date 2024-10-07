@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Filme - CineRank</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <header>
+        <img src="/imagens/Stars.png" alt="CineRank" class="logo">
+    </header>
+    
+    <main>
+        <div class="analise-container">
+            <h1>Detalhes do Filme</h1>
+            <div class="analise-card">
+                <h2 th:text="${filme.titulo}"></h2>
+                <p th:text="${filme.sinopse}"></p>
+                <p>Gênero: <span th:text="${filme.genero}"></span></p>
+                <p>Ano de Lançamento: <span th:text="${filme.anoLancamento}"></span></p>
+            </div>
+        </div>
+        
+        
+        <div class="analise-container">
+            <h3>Análises</h3>
+            <th:block th:each="analise : ${analises}">
+                <div class="analise-card">
+                    <p class="analise-text" th:text="${analise.analise}"></p>
+                    <p class="analise-nota">Nota: <span th:text="${analise.nota}"></span></p>
+                </div>
+            </th:block>
+        </div>
+        
+        <h3>Adicionar Análise</h3>
+        <form th:action="@{/filmes/{id}/analisar(id=${filme.id})}" th:object="${novaAnalise}" method="post" class="analise-form">
+            <textarea th:field="*{analise}" placeholder="Sua análise" required></textarea>
+            <input type="number" th:field="*{nota}" placeholder="Nota (1 a 5)" required min="1" max="5" />
+            <button type="submit">Adicionar Análise</button>
+        </form>
+        
+        <a href="/filmes" class="back-link">Voltar</a>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

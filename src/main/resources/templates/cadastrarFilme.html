@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Filme - CineRank</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <img src="/imagens/Stars.png" alt="CineRank" class="logo">
+    </header>
+    
+    <main>
+        <h1>Cadastrar Filme</h1>
+        <form th:action="@{/filmes/cadastrar}" th:object="${filme}" method="post">
+            <input type="text" th:field="*{titulo}" placeholder="Título" required />
+            <input type="text" th:field="*{sinopse}" placeholder="Sinopse" required />
+            <input type="text" th:field="*{genero}" placeholder="Gênero" required />
+            <input type="number" th:field="*{anoLancamento}" placeholder="Ano de Lançamento" required max="2024"/>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <a href="/filmes" class="back-link">Voltar</a>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
