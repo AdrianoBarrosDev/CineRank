@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes Cadastrados - CineRank</title> 
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head> 
+<body>
+    <header>
+        <img src="/imagens/Stars.png" alt="CineRank" class="logo">
+    </header>
+    
+    <main>
+        <h1>Filmes Cadastrados</h1>
+        <a href="/filmes/cadastrar" class="btn cadastrar-btn">Cadastrar Filme</a>
+        <ul class="filmes-lista">
+            <th:block th:each="filme : ${filmes}">
+                <li>
+                    <a th:href="@{/filmes/{id}(id=${filme.id})}" th:text="${filme.titulo}" class="filme-link">Filme</a>
+                </li>
+            </th:block>
+        </ul>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
