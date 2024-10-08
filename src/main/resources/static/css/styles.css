@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+<<<<<<< HEAD
 /* Variáveis de cores */
 :root {
     --cor-primaria: #FF6F61; /* Coral */
@@ -8,6 +9,15 @@
     --cor-texto: #333333; /* Cinza escuro */
     --cor-botao: #EF476F; /* Rosa vibrante */
     --cor-botao-hover: #D43D5A; /* Rosa escuro */
+=======
+:root {
+    --cor-primaria: #FF6F61;
+    --cor-secundaria: #FFD166;
+    --cor-fundo: #FFF3E0;
+    --cor-texto: #333333;
+    --cor-botao: #EF476F;
+    --cor-botao-hover: #D43D5A;
+>>>>>>> master
     --cor-link: #FF6F61;
     --cor-link-hover: #EF476F;
 }
@@ -40,7 +50,10 @@ header {
 /* Conteúdo principal */
 main {
     flex: 1;
+<<<<<<< HEAD
     padding: 40px 20px;
+=======
+>>>>>>> master
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
@@ -143,6 +156,10 @@ form button:hover {
     justify-content: center;
     gap: 20px;
     text-align: center;
+<<<<<<< HEAD
+=======
+    padding: 0px;
+>>>>>>> master
 }
 
 .analise-card {
@@ -154,6 +171,10 @@ form button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+<<<<<<< HEAD
+=======
+    padding: 0px;
+>>>>>>> master
 }
 
 .analise-card:hover {
@@ -195,6 +216,14 @@ footer {
     padding: 15px 0;
 }
 
+<<<<<<< HEAD
+=======
+#lista-analise {
+    display: flex;
+    padding-left: 0;
+}
+
+>>>>>>> master
 /* Responsividade */
 @media (max-width: 600px) {
     main {

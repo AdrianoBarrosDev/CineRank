@@ -1,18 +1,11 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
-=======
 <html lang="pt-BR">
->>>>>>> master
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Filme - CineRank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Filme - CineRank</title>
     <link rel="stylesheet" href="/css/styles.css">
-<<<<<<< HEAD
-=======
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
->>>>>>> master
 </head>
 <body>
     <header>
@@ -20,41 +13,45 @@
     </header>
     
     <main>
-        <h1>Cadastrar Filme</h1>
-<<<<<<< HEAD
-        <form th:action="@{/filmes/cadastrar}" th:object="${filme}" method="post">
-            <input type="text" th:field="*{titulo}" placeholder="Título" required />
-            <input type="text" th:field="*{sinopse}" placeholder="Sinopse" required />
-            <input type="text" th:field="*{genero}" placeholder="Gênero" required />
-            <input type="number" th:field="*{anoLancamento}" placeholder="Ano de Lançamento" required max="2024"/>
-            <button type="submit">Cadastrar</button>
-        </form>
-        <a href="/filmes" class="back-link">Voltar</a>
-=======
-        <form id="filmeForm" class="form-container">
+        <h1>Editar Filme</h1>
+        <form id="filmeForm" class="filme-form">
+            <input type="hidden" id="id" />
             <input type="text" id="titulo" placeholder="Título" required />
             <input type="text" id="sinopse" placeholder="Sinopse" required />
             <input type="text" id="genero" placeholder="Gênero" required />
             <input type="number" id="anoLancamento" placeholder="Ano de Lançamento" required max="2024"/>
-            <button type="submit" class="cadastrar-btn">Cadastrar</button>
+            <button type="submit" class="cadastrar-btn">Salvar</button>
         </form>
->>>>>>> master
     </main>
     
     <footer>
         <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
     </footer>
-<<<<<<< HEAD
-</body>
-</html>
-=======
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            function getFilmeIdUrl() {
+                const pathParts = window.location.pathname.split('/');
+                return pathParts[pathParts.length - 1];
+            }
+            
+            const id = getFilmeIdUrl();
+            $('#id').val(id);
+            
+            $.get(`/api/filmes/${id}`, function(filme) {
+                $('#id').val(filme.id);
+                $('#titulo').val(filme.titulo);
+                $('#sinopse').val(filme.sinopse);
+                $('#genero').val(filme.genero);
+                $('#anoLancamento').val(filme.anoLancamento);
+            });
+
             $('#filmeForm').on('submit', function(event) {
                 event.preventDefault();
 
                 var filme = {
+                    id: $('#id').val(),
                     titulo: $('#titulo').val(),
                     sinopse: $('#sinopse').val(),
                     genero: $('#genero').val(),
@@ -62,22 +59,21 @@
                 };
 
                 $.ajax({
-                    type: 'POST',
-                    url: '/api/filmes',
+                    type: 'PUT',
+                    url: `/api/filmes/${id}`,
                     data: JSON.stringify(filme),
                     contentType: 'application/json',
                     success: function() {
-                        alert('Filme cadastrado com sucesso!');
-                        window.location.href = "/filmes";
+                        alert('Filme atualizado com sucesso!');
+                        window.location.replace('/filmes');
                     },
                     error: function() {
-                        alert('Erro ao cadastrar o filme.');
+                        alert('Erro ao atualizar o filme.');
                     }
                 });
             });
-            
         });
+        
     </script>
 </body>
 </html>
->>>>>>> master

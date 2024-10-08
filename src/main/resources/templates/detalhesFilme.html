@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
 <head>
     <meta charset="UTF-8">
@@ -47,5 +48,163 @@
     <footer>
         <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
     </footer>
+=======
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Filme - CineRank</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        
+        .lista-analises {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .analise-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            padding-top: 10px;
+        }
+        
+        .analise-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .analise-body {
+            font-size: 14px;
+        }
+        
+        .tema-btn, .voltar-link {
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .tema-btn:hover, .voltar-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="/imagens/Stars.png" alt="CineRank" class="logo">
+    </header>
+
+    <main>
+        <h1>Detalhes do Filme</h1>
+        <h2 id="tituloFilme"></h2>
+        <p id="sinopseFilme"></p>
+        <p>Gênero: <span id="generoFilme"></span></p>
+        <p>Ano de Lançamento: <span id="anoLancamentoFilme"></span></p>
+
+        <section class="analises">
+            <h3>Análises</h3>
+            <ul id="listaAnalises" class="lista-analises"></ul>
+        </section>
+
+        <section class="adicionar-analise">
+            <h3>Adicionar Análise</h3>
+            <form id="analiseForm" class="analise-form">
+                <textarea id="detalhes" placeholder="Detalhes da análise" required></textarea>
+                <input type="number" id="nota" placeholder="Nota (1 a 5)" required min="1" max="5" />
+                <input type="hidden" id="filmeId" value="" />
+                <button type="submit" class="cadastrar-btn">Cadastrar Análise</button>
+            </form>
+        </section>
+
+        <a href="#" class="voltar-link" onclick="window.location.replace('/filmes');">Voltar</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function getFilmeIdUrl() {
+                const pathParts = window.location.pathname.split('/');
+                return pathParts[pathParts.length - 1];
+            }
+            
+            const filmeId = getFilmeIdUrl();
+            $('#filmeId').val(filmeId);
+            
+            function carregarDetalhesFilme() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/filmes/' + filmeId,
+                    success: function(filme) {
+                        
+                        $('#tituloFilme').text(filme.titulo);
+                        $('#sinopseFilme').text(filme.sinopse);
+                        $('#generoFilme').text(filme.genero);
+                        $('#anoLancamentoFilme').text(filme.anoLancamento);
+                        
+                        $('#listaAnalises').empty();
+                        
+                        filme.analises.forEach(function(analise) {
+                            var analiseHtml = `
+                                <li class="analise-card">
+                                    <div class="analise-header">
+                                        <span class="analise-nota">Nota: ${analise.nota}</span>
+                                    </div>
+                                    <div class="analise-body">
+                                        <p>${analise.detalhes}</p>
+                                    </div>
+                                </li>`;
+                            $('#listaAnalises').append(analiseHtml);
+                        });
+                    },
+                    error: function() {
+                        alert('Erro ao carregar os detalhes do filme.');
+                    }
+                });
+            }
+            
+            carregarDetalhesFilme();
+            
+            $('#analiseForm').on('submit', function(event) {
+                event.preventDefault();
+
+                var analise = {
+                    detalhes: $('#detalhes').val(),
+                    nota: $('#nota').val(),
+                    filme: {
+                        id: parseInt(filmeId)
+                    }
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/analises',
+                    data: JSON.stringify(analise),
+                    contentType: 'application/json',
+                    success: function() {
+                        alert('Análise cadastrada com sucesso!');
+                        carregarDetalhesFilme();
+                        $('#analiseForm')[0].reset();
+                    },
+                    error: function() {
+                        alert('Erro ao cadastrar a análise.');
+                    }
+                });
+            });
+        });
+        
+    </script>
+>>>>>>> master
 </body>
 </html>
