@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Filme - CineRank</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <img src="/imagens/Stars.png" alt="CineRank" class="logo">
+    </header>
+    
+    <main>
+        <h1>Cadastrar Filme</h1>
+        <form id="filmeForm" class="form-container">
+            <input type="text" id="titulo" placeholder="Título" required />
+            <input type="text" id="sinopse" placeholder="Sinopse" required />
+            <input type="text" id="genero" placeholder="Gênero" required />
+            <input type="number" id="anoLancamento" placeholder="Ano de Lançamento" required max="2024"/>
+            <button type="submit" class="cadastrar-btn">Cadastrar</button>
+        </form>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            $('#filmeForm').on('submit', function(event) {
+                event.preventDefault();
+
+                var filme = {
+                    titulo: $('#titulo').val(),
+                    sinopse: $('#sinopse').val(),
+                    genero: $('#genero').val(),
+                    anoLancamento: $('#anoLancamento').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/filmes',
+                    data: JSON.stringify(filme),
+                    contentType: 'application/json',
+                    success: function() {
+                        alert('Filme cadastrado com sucesso!');
+                        window.location.href = "/filmes";
+                    },
+                    error: function() {
+                        alert('Erro ao cadastrar o filme.');
+                    }
+                });
+            });
+            
+        });
+    </script>
+</body>
+</html>

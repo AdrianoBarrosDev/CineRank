@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes Cadastrados - CineRank</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="/imagens/Stars.png" alt="CineRank" class="logo">
+    </header>
+    
+    <main>
+        <h1>Filmes Cadastrados</h1>
+        <a href="/filmes/cadastrar" class="cadastrar-btn">Cadastrar Novo Filme</a>
+        
+        <ul class="filmes-lista">
+            <th:block th:each="filme : ${filmes}">
+                <li>
+                    <span class="filme-link" th:text="${filme.titulo}"></span> - 
+                    <a class="filme-link" th:href="@{/detalhesfilme/{id}(id=${filme.id})}">Detalhes</a>
+                    <a class="filme-link" th:href="@{/filmes/editar/{id}(id=${filme.id})}">Editar</a>
+                    <a href="#" class="filme-link" th:onclick="'deletarFilme(' + ${filme.id} + ')'">Deletar</a>
+                </li>
+            </th:block>
+        </ul>
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function deletarFilme(id) {
+            if (confirm('Tem certeza que deseja deletar este filme?')) {
+                $.ajax({
+                    url: '/api/filmes/' + id,
+                    type: 'DELETE',
+                    success: function(result) {
+                        alert('Filme deletado com sucesso!');
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Erro ao deletar filme: ' + error);
+                    }
+                });
+            }
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Filme - CineRank</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="/imagens/Stars.png" alt="CineRank" class="logo">
+    </header>
+    
+    <main>
+        <h1>Editar Filme</h1>
+        <form id="filmeForm" class="filme-form">
+            <input type="hidden" id="id" />
+            <input type="text" id="titulo" placeholder="Título" required />
+            <input type="text" id="sinopse" placeholder="Sinopse" required />
+            <input type="text" id="genero" placeholder="Gênero" required />
+            <input type="number" id="anoLancamento" placeholder="Ano de Lançamento" required max="2024"/>
+            <button type="submit" class="cadastrar-btn">Salvar</button>
+        </form>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CineRank. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function getFilmeIdUrl() {
+                const pathParts = window.location.pathname.split('/');
+                return pathParts[pathParts.length - 1];
+            }
+            
+            const id = getFilmeIdUrl();
+            $('#id').val(id);
+            
+            $.get(`/api/filmes/${id}`, function(filme) {
+                $('#id').val(filme.id);
+                $('#titulo').val(filme.titulo);
+                $('#sinopse').val(filme.sinopse);
+                $('#genero').val(filme.genero);
+                $('#anoLancamento').val(filme.anoLancamento);
+            });
+
+            $('#filmeForm').on('submit', function(event) {
+                event.preventDefault();
+
+                var filme = {
+                    id: $('#id').val(),
+                    titulo: $('#titulo').val(),
+                    sinopse: $('#sinopse').val(),
+                    genero: $('#genero').val(),
+                    anoLancamento: $('#anoLancamento').val()
+                };
+
+                $.ajax({
+                    type: 'PUT',
+                    url: `/api/filmes/${id}`,
+                    data: JSON.stringify(filme),
+                    contentType: 'application/json',
+                    success: function() {
+                        alert('Filme atualizado com sucesso!');
+                        window.location.replace('/filmes');
+                    },
+                    error: function() {
+                        alert('Erro ao atualizar o filme.');
+                    }
+                });
+            });
+        });
+        
+    </script>
+</body>
+</html>
